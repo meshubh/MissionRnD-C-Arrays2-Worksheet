@@ -13,6 +13,50 @@ ERROR CASES: Return -1 for invalid inputs.
 NOTES:
 */
 
-int findSingleOccurenceNumber(int *A, int len) {
-	return -1;
+int findSingleOccurenceNumber(int *A, int len) 
+{
+	if (A== nullptr || len<=0)
+		return -1;
+	else
+	{
+		int iterator, iterator1, count = 0;
+		for (iterator = 0; iterator < len; iterator++)
+		{
+			for (iterator1 = iterator; iterator1 < len; iterator1++)
+			{
+				if (A[iterator]>A[iterator1])
+				{
+					A[iterator] = A[iterator] + A[iterator1];
+					A[iterator1] = A[iterator] - A[iterator1];
+					A[iterator] = A[iterator] - A[iterator1];
+				}
+			}
+		}
+		for (iterator = 0; iterator < len; iterator++)
+		{
+			if (iterator > 0 && iterator < len-1)
+			{
+				if (A[iterator - 1] != A[iterator] && A[iterator] != A[iterator + 1])
+				{
+					return A[iterator];
+				}
+			}
+			else if (iterator == 0)
+			{
+				if (A[iterator] != A[iterator + 1])
+				{
+					return A[iterator];
+				}
+			}
+			else
+			{
+				if (A[iterator - 1] != A[iterator])
+				{
+					return A[iterator];
+				}
+			}
+		}
+
+	}
+
 }
