@@ -22,6 +22,52 @@ struct transaction {
 	char description[20];
 };
 
-struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen)
+{
+	if (A == NULL || B == NULL)
+		return NULL;
+	else
+	{
+		struct transaction *output = (struct transaction *)malloc((ALen + BLen)*sizeof(struct transaction));
+		int iterator1, iterator2, iterator3 = 0, arr1_year, arr1_month, arr1_day, arr2_day, arr2_month, arr2_year;
+		for (iterator1 = 0; iterator1 < ALen; iterator1++)
+		{
+			arr1_year = A[iterator1].date[6] * 1000 + A[iterator1].date[7] * 100 + A[iterator1].date[8] * 10 + A[iterator1].date[9];
+			arr1_month = A[iterator1].date[3] * 10 + A[iterator1].date[4];
+			arr1_day = A[iterator1].date[0] * 10 + A[iterator1].date[1];
+			for (iterator2 = 0; iterator2 < BLen; iterator2++)
+			{
+				arr2_year = B[iterator2].date[6] * 1000 + B[iterator2].date[7] * 100 + B[iterator2].date[8] * 10 + B[iterator2].date[9];
+				if (arr1_year == arr2_year)
+				{
+					arr2_month = B[iterator2].date[3] * 10 + B[iterator2].date[4];
+					if (arr1_month == arr2_month)
+					{
+						arr2_day = B[iterator2].date[0] * 10 + B[iterator2].date[1];
+						if (arr1_day == arr2_day)
+						{
+							output[iterator3] = A[iterator1];
+							iterator3++;
+						}
+						else if (arr1_day < arr2_day)
+						{
+							break;
+						}
+					}
+					else if (arr1_month < arr2_month)
+					{
+						break;
+					}
+				}
+				else if (arr1_year<arr2_year)
+				{
+					break;
+				}
+			}
+		}
+		if (iterator3 == 0)
+			return NULL;
+		else
+			return output;
+	}
 }
